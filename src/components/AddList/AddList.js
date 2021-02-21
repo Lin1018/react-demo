@@ -76,6 +76,7 @@ class AddList extends Component {
   }
   
   inputChange(e) {
+    console.log(this.myInput)
     this.setState({
         iptValue: e.target.value
     })
@@ -124,7 +125,7 @@ class AddList extends Component {
                   value={this.state.iptValue} 
                   onChange={this.inputChange.bind(this)} 
                   onKeyDown={this.entryAddList.bind(this)}
-                  ref={(input) => {this.input = input}}
+                  ref={(input) => {this.myInput = input}}
               />
               <button onClick={this.addList.bind(this)}>增加服务</button>
           </div>
