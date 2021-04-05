@@ -18,11 +18,11 @@ class App extends Component {
       msg: 'msg被改变'
     })
   }
-  
+
   render() {
     return (
       <div>
-        <img src={logo} style={{width: 200}} />
+        <img src={logo} style={{width: 200}} alt="logo" />
         <h3 onClick={this.sendProps.bind(this)}>{this.state.msg}</h3>
         <AddList 
           msg={this.state.msg} 

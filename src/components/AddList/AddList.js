@@ -3,16 +3,23 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import './AddList.css';
+import 'antd/dist/antd.css'
+import { Input } from 'antd';
+import store from '../../store'
 
 class AddList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-        iptValue: '',
-        list: ['服务1', '服务2'],
+        iptValue: store.getState().iptValue,
+        list: store.getState().list,
         html: '<h1>我是HTML渲染</h1>',
         dataList: []
     }
+
+    // 实时更新store数据至state
+    this.storeChange = this.storeChange.bind(this)
+    store.subscribe(this.storeChange)
   }
 
   static propTypes = {
@@ -65,7 +72,6 @@ class AddList extends Component {
         pageSize: 5
       }
     }).then(res => {
-      console.log(res)
       var data = res.data.data
       this.setState({
         dataList: data.product
@@ -76,7 +82,12 @@ class AddList extends Component {
   }
   
   inputChange(e) {
-    console.log(this.myInput)
+    const action = {
+      type: 'inputChange',
+      iptValue: e.target.value
+    }
+    store.dispatch(action)
+
     this.setState({
         iptValue: e.target.value
     })
@@ -86,10 +97,14 @@ class AddList extends Component {
     if (!this.state.iptValue) {
       return
     }
-    this.setState({
-        list: [...this.state.list, this.state.iptValue],
-        iptValue: ''
-    })
+    const action = {
+      type: 'addItem'
+    }
+    store.dispatch(action)
+    // this.setState({
+    //     list: [...this.state.list, this.state.iptValue],
+    //     iptValue: ''
+    // })
   }
 
   entryAddList(e) {
@@ -111,6 +126,13 @@ class AddList extends Component {
         list: list
     })
   }
+
+  storeChange() {
+    this.setState({
+      iptValue: store.getState().iptValue,
+      list: store.getState().list
+    })
+  }
   
   render() {
     console.log('组件挂载中')
@@ -120,12 +142,13 @@ class AddList extends Component {
           <div>
               <h3>这是AddList组件</h3>
               <label htmlFor="input">输入服务：</label>
-              <input 
+              <Input 
                   id="input"
                   value={this.state.iptValue} 
                   onChange={this.inputChange.bind(this)} 
                   onKeyDown={this.entryAddList.bind(this)}
-                  ref={(input) => {this.myInput = input}}
+                  ref={(input) => {this.myInput = input}}   /* 用于this.myInput来做DOM操作,应尽量避免使用 */
+                  style={{width:'300px'}}
               />
               <button onClick={this.addList.bind(this)}>增加服务</button>
           </div>
