@@ -1,11 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import './AddList.css';
-import 'antd/dist/antd.css'
-import { Input } from 'antd';
 import store from '../../store'
+import { changeInputAction, addItemAction, delItemAction } from '../../store/actionCreators'
+import AddListUi from './AddListUi'
 
 class AddList extends Component {
   constructor(props) {
@@ -16,10 +15,12 @@ class AddList extends Component {
         html: '<h1>我是HTML渲染</h1>',
         dataList: []
     }
-
+    this.changeInput = this.changeInput.bind(this)
+    this.entryAddList = this.entryAddList.bind(this)
+    this.addList = this.addList.bind(this)
+    this.deleteItem = this.deleteItem.bind(this)
     // 实时更新store数据至state
     this.storeChange = this.storeChange.bind(this)
-    store.subscribe(this.storeChange)
   }
 
   static propTypes = {
@@ -37,7 +38,7 @@ class AddList extends Component {
 
   componentDidMount() {
     console.log('组件挂载后')
-
+    store.subscribe(this.storeChange)
     this.getData()
   }
 
@@ -81,11 +82,8 @@ class AddList extends Component {
     })
   }
   
-  inputChange(e) {
-    const action = {
-      type: 'inputChange',
-      iptValue: e.target.value
-    }
+  changeInput(e) {
+    const action = changeInputAction(e.target.value)
     store.dispatch(action)
 
     this.setState({
@@ -97,9 +95,7 @@ class AddList extends Component {
     if (!this.state.iptValue) {
       return
     }
-    const action = {
-      type: 'addItem'
-    }
+    const action = addItemAction()
     store.dispatch(action)
     // this.setState({
     //     list: [...this.state.list, this.state.iptValue],
@@ -120,11 +116,13 @@ class AddList extends Component {
   }
 
   deleteItem(index) {
-    var list = this.state.list
-    list.splice(index, 1)
-    this.setState({
-        list: list
-    })
+    const action = delItemAction(index)
+    store.dispatch(action)
+    // var list = this.state.list
+    // list.splice(index, 1)
+    // this.setState({
+    //     list: list
+    // })
   }
 
   storeChange() {
@@ -137,55 +135,17 @@ class AddList extends Component {
   render() {
     console.log('组件挂载中')
     return (
-      <Fragment>
-        <div className="add-list">
-          <div>
-              <h3>这是AddList组件</h3>
-              <label htmlFor="input">输入服务：</label>
-              <Input 
-                  id="input"
-                  value={this.state.iptValue} 
-                  onChange={this.inputChange.bind(this)} 
-                  onKeyDown={this.entryAddList.bind(this)}
-                  ref={(input) => {this.myInput = input}}   /* 用于this.myInput来做DOM操作,应尽量避免使用 */
-                  style={{width:'300px'}}
-              />
-              <button onClick={this.addList.bind(this)}>增加服务</button>
-          </div>
-          <ul ref={(ul) => {this.ul = ul}}>
-            <TransitionGroup>
-              {
-                  this.state.list.map((item, index) => {
-                      return (
-                        <CSSTransition
-                          timeout={1000}
-                          classNames='boss-text'
-                          unmountOnExit
-                          appear={true}
-                          key={index+item} 
-                        >
-                          <li className="item" onClick={this.deleteItem.bind(this, index)}>{item}</li>
-                        </CSSTransition>
-                      )
-                  })
-              }
-            </TransitionGroup>
-          </ul>
-
-          <div dangerouslySetInnerHTML={{__html: this.state.html}}></div>
-          <span>{this.props.defaultMsg}</span>
-
-          <ul>
-            {
-              this.state.dataList.map((item, index) => {
-                return (
-                  <li key={index}>{item.title}</li>
-                )
-              })
-            }
-          </ul>
-        </div>
-      </Fragment>
+      <AddListUi
+        iptValue={this.state.iptValue}
+        list={this.state.list}
+        html={this.state.html}
+        dataList={this.state.dataList}
+        defaultMsg={this.props.defaultMsg}
+        changeInput={this.changeInput}
+        entryAddList={this.entryAddList}
+        addList={this.addList}
+        deleteItem={this.deleteItem}
+      />
     )
   }
 }
