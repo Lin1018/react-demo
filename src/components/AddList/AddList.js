@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import './AddList.css';
+import './AddList.scss';
 import store from '../../store'
-import { changeInputAction, addItemAction, delItemAction } from '../../store/actionCreators'
+import * as actionCreators from '../../store/actionCreators'
 import AddListUi from './AddListUi'
 
 class AddList extends Component {
@@ -83,7 +83,7 @@ class AddList extends Component {
   }
   
   changeInput(e) {
-    const action = changeInputAction(e.target.value)
+    const action = actionCreators.changeInputAction(e.target.value)
     store.dispatch(action)
 
     this.setState({
@@ -95,7 +95,7 @@ class AddList extends Component {
     if (!this.state.iptValue) {
       return
     }
-    const action = addItemAction()
+    const action = actionCreators.addItemAction()
     store.dispatch(action)
     // this.setState({
     //     list: [...this.state.list, this.state.iptValue],
@@ -116,7 +116,7 @@ class AddList extends Component {
   }
 
   deleteItem(index) {
-    const action = delItemAction(index)
+    const action = actionCreators.delItemAction(index)
     store.dispatch(action)
     // var list = this.state.list
     // list.splice(index, 1)

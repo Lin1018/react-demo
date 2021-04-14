@@ -6,6 +6,10 @@ ul {
 }
 .item {
     font-style: italic;
+    cursor: pointer;
+    &:hover {
+        color: green;
+    }
 }
 
 /* 

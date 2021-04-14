@@ -16,10 +16,10 @@ class AddListUi extends Component {
                       value={this.props.iptValue} 
                       onChange={this.props.changeInput} 
                       onKeyDown={this.props.entryAddList}
-                      ref={(input) => {this.myInput = input}}   /* 用于this.myInput来做DOM操作,应尽量避免使用 */
+                      ref={(input) => {this.myInput = input}}
                       style={{width:'300px'}}
                   />
-                  <button onClick={this.props.addList}>增加服务</button>
+                  <Button type="primary" onClick={this.props.addList}>增加服务</Button>
               </div>
               <ul ref={(ul) => {this.ul = ul}}>
                 <TransitionGroup>
@@ -33,7 +33,7 @@ class AddListUi extends Component {
                               appear={true}
                               key={index+item} 
                             >
-                              <li className="item" onClick={(index) => {this.props.deleteItem(index)}}>{item}</li>
+                              <li className="item" onClick={() => {this.props.deleteItem(index)}}>{item}</li>
                             </CSSTransition>
                           )
                       })
