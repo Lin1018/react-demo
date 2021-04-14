@@ -6,7 +6,7 @@ const defaultState = {
 }
 
 // state: 指的是原始仓库里的状态
-const rerducer =  (state = defaultState, action) => {  
+const reducer =  (state = defaultState, action) => {  
     switch (action.type) {
         case actionType.CHANGE_INPUT:
             var newState = {
@@ -30,4 +30,4 @@ const rerducer =  (state = defaultState, action) => {
     }
 }
 
-export default rerducer
+export default reducer
