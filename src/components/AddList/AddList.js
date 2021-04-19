@@ -97,10 +97,6 @@ class AddList extends Component {
     }
     const action = actionCreators.addItemAction()
     store.dispatch(action)
-    // this.setState({
-    //     list: [...this.state.list, this.state.iptValue],
-    //     iptValue: ''
-    // })
   }
 
   entryAddList(e) {
@@ -118,11 +114,6 @@ class AddList extends Component {
   deleteItem(index) {
     const action = actionCreators.delItemAction(index)
     store.dispatch(action)
-    // var list = this.state.list
-    // list.splice(index, 1)
-    // this.setState({
-    //     list: list
-    // })
   }
 
   storeChange() {
