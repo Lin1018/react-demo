@@ -29,7 +29,7 @@ class App extends Component {
           msg={this.state.msg} 
           requiredMsg={this.state.requiredMsg}
         /> */}
-        <ReactHooks />
+        <ReactHooks></ReactHooks>
       </div>
     )
   }
