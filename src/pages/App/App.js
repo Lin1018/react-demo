@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import AddList from '../../components/AddList/AddList'
-import ReactHooks from '../../components/ReactHooks';
 import logo from '../../logo.svg'
 
 class App extends Component {
@@ -23,13 +22,12 @@ class App extends Component {
   render() {
     return (
       <div>
-        {/* <img src={logo} style={{width: 200}} alt="logo" />
+        <img src={logo} style={{width: 200}} alt="logo" />
         <h3 onClick={this.sendProps.bind(this)}>{this.state.msg}</h3>
         <AddList 
           msg={this.state.msg} 
           requiredMsg={this.state.requiredMsg}
-        /> */}
-        <ReactHooks></ReactHooks>
+        />
       </div>
     )
   }

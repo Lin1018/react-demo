@@ -18,6 +18,7 @@ export const delItemAction = (index) => ({
 export const getDataAction = (data) => ({
     type: actionType.GET_DATA,
     data
+    
 })
 
 export const getTodoData = () => {

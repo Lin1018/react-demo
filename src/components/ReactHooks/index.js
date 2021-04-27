@@ -34,7 +34,7 @@ function ReactHooks() {
     return () => {
       console.log('unmount page')
     }
-  }, [])  // 数组参数为触发componentWillUnmount时机
+  }, [count])  // 第二个参数为触发componentWillUnmount时机
 
   return (
     <div>
