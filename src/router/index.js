@@ -1,23 +1,40 @@
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import App from '../pages/App/App'
-import ReactHooks from '../components/ReactHooks'
+import ReactHooks from '../pages/reactHooks'
 import RouterPage from '../pages/routerPage'
 import RouterDetail from '../pages/routerPage/routerDetail'
+import NotFound from '../pages/routerPage/NotFound'
 
-function AppRouter () {
-  return (
-    <Router>
-      <ul>
-        <li><Link to="/">home</Link></li>
-        <li><Link to="/reactHooks">react hooks</Link></li>
-        <li><Link to="/routerPage">router page</Link></li>
-      </ul>
-      <Route path="/" exact component={App}></Route>
-      <Route path="/reactHooks" component={ReactHooks}></Route>
-      <Route path="/routerPage" component={RouterPage}></Route>
-      <Route path="/routerDetail/:id" component={RouterDetail}></Route>
-    </Router>
-  )
-}
+let routerConfig = [
+  {
+    path: '/',
+    title: '首页',
+    exact: true,
+    component: App
+  },  
+  {
+    path: '/reactHooks',
+    title: 'reactHooks',
+    exact: true,
+    component: ReactHooks
+  },
+  {
+    path: '/routerPage',
+    title: 'routerPage',
+    exact: false,
+    component: RouterPage
+  },
+  {
+    path: '/routerDetail/:id',
+    title: '路由详情',
+    exact: false,
+    component: RouterDetail
+  },
+  {
+    path: '',
+    title: 'NotFound',
+    exact: false,
+    component: NotFound
+  }
+]
 
-export default AppRouter
+export default routerConfig
